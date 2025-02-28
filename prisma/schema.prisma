@@ -28,7 +28,7 @@ model User {
 
 model CheckIn {
   id           String    @id @default(uuid())
-  crated_at    DateTime  @default(now()) // pega a data de agora
+  created_at    DateTime  @default(now()) // pega a data de agora
   validated_at DateTime?
 
   user    User   @relation(fields: [user_id], references: [id])
