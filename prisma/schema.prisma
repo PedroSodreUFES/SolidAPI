@@ -13,6 +13,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  MEMBER
+}
+
 //@@ configuracoes de tabela; @ configuracoes de coluna
 model User {
   id            String   @id @default(uuid()) // seta a coluna id como id. o valor sempre será uuid
@@ -20,6 +25,7 @@ model User {
   email         String   @unique // email precisa ser único
   password_hash String
   created_at    DateTime @default(now())
+  role          Role     @default(MEMBER)
 
   checkIns CheckIn[] // nao salva no banco de dados, logo usa camelCase
 
@@ -28,7 +34,7 @@ model User {
 
 model CheckIn {
   id           String    @id @default(uuid())
-  created_at    DateTime  @default(now()) // pega a data de agora
+  created_at   DateTime  @default(now()) // pega a data de agora
   validated_at DateTime?
 
   user    User   @relation(fields: [user_id], references: [id])
